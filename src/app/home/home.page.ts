@@ -13,15 +13,15 @@ export class HomePage implements OnInit {
   navButtons: RouteButtonProps[] = [
     {
       title: 'Weather',
-      path: `../${EndPoint.WEATHER}`,
+      path: EndPoint.WEATHER,
     },
     {
       title: 'Todos',
-      path: `../${EndPoint.TODO}`,
+      path: EndPoint.TODO,
     },
     {
-      title: 'Settings',
-      path: `../${EndPoint.SETTINGS}`,
+      title: 'Facts',
+      path: EndPoint.FACTS,
     },
   ];
 

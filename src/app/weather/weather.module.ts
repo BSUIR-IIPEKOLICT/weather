@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { WeatherPageRoutingModule } from './weather-routing.module';
-
 import { WeatherPage } from './weather.page';
 
 @NgModule({

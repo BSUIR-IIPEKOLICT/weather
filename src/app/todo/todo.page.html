@@ -1,22 +1,70 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>todo</ion-title>
+    <ion-title>Todo</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <!-- Default Progressbar -->
-  <ion-progress-bar></ion-progress-bar>
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-  <!-- Default Progressbar with 50 percent -->
-  <ion-progress-bar value="0.5"></ion-progress-bar>
+  <ng-container *ngIf='todos && todos.length'>
+    <ion-card *ngFor='let todo of todos'>
+      <ion-item>
+        <ion-checkbox
+          slot='start'
+          [checked]='todo.isCompleted'
+          (click)='onChangeCompleted(todo)'
+        ></ion-checkbox>
+        <ion-input
+          [ngClass]='{
+            "todo__text--bold": todo.isImportant,
+            "todo__text--through": todo.isCompleted
+          }'
+          [readonly]='true'
+        >
+          {{ todo.text }}
+        </ion-input>
+        <ion-icon name="create" slot='end' (click)='onPick(todo)'></ion-icon>
+        <ion-icon name="trash" slot='end' (click)='onDelete(todo.id)'></ion-icon>
+      </ion-item>
+    </ion-card>
+  </ng-container>
 
-  <!-- Colorize Progressbar -->
-  <ion-progress-bar color="primary" value="0.5"></ion-progress-bar>
-  <ion-progress-bar color="secondary" value="0.5"></ion-progress-bar>
+  <ng-container *ngIf='todos && !todos.length'>
+    <ion-item>
+      <ion-label>No todos</ion-label>
+    </ion-item>
+  </ng-container>
 
-  <!-- Other types -->
-  <ion-progress-bar value="0.25" buffer="0.5"></ion-progress-bar>
-  <ion-progress-bar type="indeterminate"></ion-progress-bar>
-  <ion-progress-bar type="indeterminate" reversed="true"></ion-progress-bar>
+  <ng-container *ngIf='!todos'>
+    <ion-progress-bar type="indeterminate"></ion-progress-bar>
+  </ng-container>
 </ion-content>
+
+<ion-footer>
+  <form [formGroup]='form' (submit)='onSubmit()'>
+    <ion-item>
+      <ion-icon
+        name="warning"
+        slot="start"
+        [ngClass]='{ "todo__form__warn": isImportantControl?.value }'
+        (click)='onChangeImportant(!isImportantControl?.value)'
+      ></ion-icon>
+      <ion-input
+        placeholder="Enter todo text"
+        [value]='textControl?.value'
+        formControlName='text'
+      ></ion-input>
+      <ion-button
+        slot='end'
+        fill='solid'
+        type='submit'
+        [disabled]='!form?.valid'
+      >
+        {{ editedTodo ? 'Change' : 'Create' }}
+      </ion-button>
+    </ion-item>
+  </form>
+</ion-footer>

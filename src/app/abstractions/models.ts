@@ -1,5 +1,5 @@
 export type Todo = {
-  id: number;
+  id: string;
   text: string;
   isCompleted: boolean;
   isImportant: boolean;
@@ -7,9 +7,6 @@ export type Todo = {
 
 export type Weather = {
   name: string;
-  clouds: {
-    all: number;
-  };
   main: {
     humidity: number;
     pressure: number;
@@ -17,7 +14,6 @@ export type Weather = {
   };
   wind: {
     deg: number;
-    gust: number;
     speed: number;
   };
   weather: [
@@ -29,6 +25,7 @@ export type Weather = {
   ];
 };
 
-export type DeleteModel = {
-  id: number;
+export type Setting = {
+  id: string;
+  city: string;
 };

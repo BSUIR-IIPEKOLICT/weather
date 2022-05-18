@@ -1,0 +1,15 @@
+.todo__text  {
+  &--bold {
+    font-weight: 700;
+  }
+
+  &--through {
+    text-decoration: line-through;
+  }
+}
+
+.todo__form {
+  &__warn {
+    color: orange;
+  }
+}

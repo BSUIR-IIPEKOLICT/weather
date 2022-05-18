@@ -6,8 +6,8 @@ import { TodoPage } from './todo.page';
 const routes: Routes = [
   {
     path: '',
-    component: TodoPage
-  }
+    component: TodoPage,
+  },
 ];
 
 @NgModule({

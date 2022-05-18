@@ -18,7 +18,7 @@
   <ion-list>
     <ion-item
       *ngFor='let buttonParams of navButtons'
-      [routerLink]='buttonParams.path'
+      [routerLink]='"../" + buttonParams.path'
     >
       {{ buttonParams.title }}
     </ion-item>

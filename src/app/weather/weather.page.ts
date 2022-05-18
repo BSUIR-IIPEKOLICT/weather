@@ -3,9 +3,7 @@ import { WeatherService } from '../services/weather.service';
 import { Weather } from '../abstractions/models';
 import { Subscription } from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { WEATHER_API_URL } from '../constants/common';
-import { StorageService } from '../services/storage.service';
-import { TempUnits, Units } from '../constants/enums';
+import { REFRESH_TIME, WEATHER_API_URL } from '../constants/common';
 
 @Component({
   selector: 'app-weather',
@@ -18,18 +16,14 @@ export class WeatherPage implements OnInit, OnDestroy {
   iconUrls: string[] = [];
   subscription: Subscription = new Subscription();
   form: FormGroup | undefined;
-  tempUnits = TempUnits.CELSIUS;
 
-  constructor(
-    private readonly weatherService: WeatherService,
-    private readonly storageService: StorageService
-  ) {}
+  constructor(private readonly weatherService: WeatherService) {}
 
   get cityControl(): AbstractControl | null {
     return this.form?.get('city') || null;
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.subscription = this.weatherService
       .getWeather()
       .subscribe((newValue: Weather) => {
@@ -47,22 +41,7 @@ export class WeatherPage implements OnInit, OnDestroy {
       city: new FormControl('', [Validators.required, Validators.nullValidator]),
     });
 
-    const savedCity: string | null | undefined = await this.storageService.get('city');
-    const savedUnits: Units | null | undefined = await this.storageService.get('units');
-
-    switch (savedUnits) {
-      case Units.IMPERIAL:
-        this.tempUnits = TempUnits.FAHRENHEIT;
-        break;
-      case Units.STANDARD:
-        this.tempUnits = TempUnits.KELVIN;
-        break;
-      default:
-        break;
-    }
-
-    this.weatherService.setUnits(savedUnits || Units.METRIC);
-    this.weatherService.setCity(savedCity || 'Minsk');
+    this.weatherService.init();
   }
 
   ngOnDestroy(): void {
@@ -72,8 +51,12 @@ export class WeatherPage implements OnInit, OnDestroy {
   async onChangeCity(): Promise<void> {
     if (this.cityControl && this.cityControl.value) {
       this.weatherService.setCity(this.cityControl.value);
-      await this.storageService.set('city', this.cityControl.value);
       this.cityControl.setValue('');
     }
+  }
+
+  async refresh(event) {
+    await this.onChangeCity();
+    setTimeout(() => event.detail.complete(), REFRESH_TIME);
   }
 }

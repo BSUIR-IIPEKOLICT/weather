@@ -5,6 +5,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ng-container *ngIf='weather'>
     <ion-card>
       <ion-card-header>
@@ -23,7 +27,7 @@
 
       <ion-item>
         <ion-icon name="thermometer" slot='start'></ion-icon>
-        <ion-label>{{ weather.main.temp }} {{ tempUnits }}</ion-label>
+        <ion-label>{{ weather.main.temp }} ℃</ion-label>
       </ion-item>
 
       <ion-item>
@@ -72,6 +76,5 @@
       slot='end'
       (click)='onChangeCity()'
     ></ion-icon>
-    <ion-icon name="settings" slot='end' routerLink='../settings'></ion-icon>
   </ion-item>
 </ion-footer>
