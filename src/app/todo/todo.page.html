@@ -9,60 +9,55 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ng-container *ngIf='todos && todos.length'>
-    <ion-card *ngFor='let todo of todos'>
+  <ng-container *ngIf="todos && todos.length">
+    <ion-card *ngFor="let todo of todos">
       <ion-item>
         <ion-checkbox
-          slot='start'
-          [checked]='todo.isCompleted'
-          (click)='onChangeCompleted(todo)'
+          slot="start"
+          [checked]="todo.isCompleted"
+          (click)="onChangeCompleted(todo)"
         ></ion-checkbox>
         <ion-input
           [ngClass]='{
             "todo__text--bold": todo.isImportant,
             "todo__text--through": todo.isCompleted
           }'
-          [readonly]='true'
+          [readonly]="true"
         >
           {{ todo.text }}
         </ion-input>
-        <ion-icon name="create" slot='end' (click)='onPick(todo)'></ion-icon>
-        <ion-icon name="trash" slot='end' (click)='onDelete(todo.id)'></ion-icon>
+        <ion-icon name="create" slot="end" (click)="onPick(todo)"></ion-icon>
+        <ion-icon name="trash" slot="end" (click)="onDelete(todo.id)"></ion-icon>
       </ion-item>
     </ion-card>
   </ng-container>
 
-  <ng-container *ngIf='todos && !todos.length'>
+  <ng-container *ngIf="todos && !todos.length">
     <ion-item>
       <ion-label>No todos</ion-label>
     </ion-item>
   </ng-container>
 
-  <ng-container *ngIf='!todos'>
+  <ng-container *ngIf="!todos">
     <ion-progress-bar type="indeterminate"></ion-progress-bar>
   </ng-container>
 </ion-content>
 
 <ion-footer>
-  <form [formGroup]='form' (submit)='onSubmit()'>
+  <form [formGroup]="form" (submit)="onSubmit()">
     <ion-item>
       <ion-icon
         name="warning"
         slot="start"
         [ngClass]='{ "todo__form__warn": isImportantControl?.value }'
-        (click)='onChangeImportant(!isImportantControl?.value)'
+        (click)="onChangeImportant(!isImportantControl?.value)"
       ></ion-icon>
       <ion-input
         placeholder="Enter todo text"
-        [value]='textControl?.value'
-        formControlName='text'
+        [value]="textControl?.value"
+        formControlName="text"
       ></ion-input>
-      <ion-button
-        slot='end'
-        fill='solid'
-        type='submit'
-        [disabled]='!form?.valid'
-      >
+      <ion-button slot="end" fill="solid" type="submit" [disabled]="!form?.valid">
         {{ editedTodo ? 'Change' : 'Create' }}
       </ion-button>
     </ion-item>

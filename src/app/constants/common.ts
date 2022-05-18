@@ -1,5 +1,7 @@
-export const WEATHER_API_URL = 'https://api.openweathermap.org';
+export const OPEN_WEATHER_API_URL = 'https://api.openweathermap.org';
+export const UNSPLASH_API_URL = 'https://api.unsplash.com';
 export const OPEN_WEATHER_APP_ID = 'b6c804c94642dc8fdcbd44e4dac85c15';
+export const UNSPLASH_CLIENT_ID = '1weqJATDfhA8cUuR7Y3A6RzH7rwcgnMEVH-RSuJ2fuE';
 
 export const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyC7nMfpcLNau1B-sYOZysv9AuNv16v3dGs',

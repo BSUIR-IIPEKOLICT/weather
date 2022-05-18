@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService, Message } from '../services/data.service';
-import { WeatherService } from '../services/weather.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EndPoint } from '../constants/enums';
 import { RouteButtonProps } from '../abstractions/types';
+import { WeatherService } from '../services/weather.service';
+import { Subscription } from 'rxjs';
+import { ImageParams, Weather } from '../abstractions/models';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
+  imageParams: ImageParams | undefined;
   navButtons: RouteButtonProps[] = [
     {
       title: 'Weather',
@@ -19,28 +21,23 @@ export class HomePage implements OnInit {
       title: 'Todos',
       path: EndPoint.TODO,
     },
-    {
-      title: 'Facts',
-      path: EndPoint.FACTS,
-    },
   ];
 
-  constructor(
-    private data: DataService,
-    private readonly weatherService: WeatherService
-  ) {}
+  private subscription: Subscription = new Subscription();
+
+  constructor(private readonly weatherService: WeatherService) {}
 
   ngOnInit(): void {
-    // this.weatherService.setCity('Minsk');
+    this.subscription = this.weatherService
+      .getImageLink()
+      .subscribe((imageParams: ImageParams) => {
+        this.imageParams = imageParams;
+      });
+
+    this.weatherService.init();
   }
 
-  refresh(ev) {
-    setTimeout(() => {
-      ev.detail.complete();
-    }, 3000);
-  }
-
-  getMessages(): Message[] {
-    return this.data.getMessages();
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

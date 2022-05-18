@@ -33,3 +33,4 @@ npm-debug.log*
 
 # main
 package-lock.json
+.env

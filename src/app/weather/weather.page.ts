@@ -3,7 +3,7 @@ import { WeatherService } from '../services/weather.service';
 import { Weather } from '../abstractions/models';
 import { Subscription } from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { REFRESH_TIME, WEATHER_API_URL } from '../constants/common';
+import { REFRESH_TIME, OPEN_WEATHER_API_URL } from '../constants/common';
 
 @Component({
   selector: 'app-weather',
@@ -33,7 +33,7 @@ export class WeatherPage implements OnInit, OnDestroy {
 
         this.weather.weather.forEach(({ description, icon }) => {
           this.description += this.description ? `, ${description}` : description;
-          this.iconUrls.push(`${WEATHER_API_URL}/img/w/${icon}.png`);
+          this.iconUrls.push(`${OPEN_WEATHER_API_URL}/img/w/${icon}.png`);
         });
       });
 

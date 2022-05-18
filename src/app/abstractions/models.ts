@@ -29,3 +29,11 @@ export type Setting = {
   id: string;
   city: string;
 };
+
+export type ImageParams = {
+  alt_description: string;
+  description: string;
+  urls: {
+    small: string;
+  };
+};

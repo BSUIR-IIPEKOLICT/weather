@@ -5,19 +5,31 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Weather app</ion-title>
     </ion-toolbar>
   </ion-header>
 
+  <ion-card>
+    <ng-container *ngIf="imageParams">
+      <ion-img
+        [src]="imageParams.urls.small"
+        [alt]="imageParams.alt_description"
+      ></ion-img>
+      <ion-card-header>
+        <ion-card-subtitle>{{ imageParams.description || 'No description' }}</ion-card-subtitle>
+      </ion-card-header>
+    </ng-container>
+
+    <ng-container *ngIf="!imageParams">
+      <ion-progress-bar type="indeterminate"></ion-progress-bar>
+    </ng-container>
+  </ion-card>
+
   <ion-list>
     <ion-item
-      *ngFor='let buttonParams of navButtons'
+      *ngFor="let buttonParams of navButtons"
       [routerLink]='"../" + buttonParams.path'
     >
       {{ buttonParams.title }}
