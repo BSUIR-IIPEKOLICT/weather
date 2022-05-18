@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "Weather",
-	"webDir": "www",
-	"bundledWebRuntime": false
+  "appId": "loshica.weather",
+  "appName": "Weather",
+  "webDir": "www",
+  "bundledWebRuntime": false
 }

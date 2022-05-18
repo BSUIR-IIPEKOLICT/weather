@@ -1,0 +1,6 @@
+{
+	"appId": "loshica.weather",
+	"appName": "Weather",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
